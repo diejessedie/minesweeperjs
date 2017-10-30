@@ -26,13 +26,19 @@ while(numberofBombsPlaced < numberOfBombs){
 
   let randomRowIndex = Math.floor(Math.random() * numberOfRows);
   let randomColIndex = Math.floor(Math.random() * numberOfColumns);
-  board[randomRowIndex][randomColIndex] = 'B';
+
+if (board[randomRowIndex][randomColIndex] !== 'B') {
+  board[randomRowIndex][randomColIndex] === 'B';
   numberofBombsPlaced++
-  //An important note: The code in your while loop has the potential to place bombs on top of already existing bombs. This will be fixed when you learn about control flow.
 }
 
+}
   return board;
 
+}
+
+const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) => {
+  
 }
 
 const printBoard = board => {
