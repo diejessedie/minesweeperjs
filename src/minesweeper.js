@@ -25,10 +25,10 @@ let numberofBombsPlaced = 0;
 while(numberofBombsPlaced < numberOfBombs){
 
   let randomRowIndex = Math.floor(Math.random() * numberOfRows);
-  let randomColIndex = Math.floor(Math.random() * numberOfColumns);
+  let randomColumnIndex = Math.floor(Math.random() * numberOfColumns);
 
-if (board[randomRowIndex][randomColIndex] !== 'B') {
-  board[randomRowIndex][randomColIndex] === 'B';
+if (board[randomRowIndex][randomColumnIndex] !== 'B') {
+  board[randomRowIndex][randomColumnIndex] = 'B';
   numberofBombsPlaced++
 }
 
@@ -38,7 +38,37 @@ if (board[randomRowIndex][randomColIndex] !== 'B') {
 }
 
 const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) => {
-  
+  let neighborOffsets = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+  const numberOfRows = bombBoard.length;
+  const numberOfColumns = bombBoard[0].length;
+  let numberOfBombs = 0;
+
+  neighborOffsets.forEach(offset => {
+    const neighborRowIndex = rowIndex + offset[0];
+    const neighborColumnIndex = columnIndex + offset[1];
+
+    if (neighborRowIndex >= 0 && neighborRowIndex <= numberOfRows && neighborColumnIndex >= 0 && neighborColumnIndex <= numberOfColumns) {
+      if (bombBoard[neighborRowIndex][neighborColumnIndex] === 'B') {
+        numberOfBombs++;
+      }
+    }
+  });
+
+return numberOfBombs;
+
+};
+
+const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) => {
+
+if (playerBoard[rowIndex][columnIndex] !== ' ') {
+  let flippedMessage = "This tile has already been flipped!";
+  return flippedMessage;
+} else if (bombBoard[rowIndex][columnIndex] === 'B') {
+   playerBoard[rowIndex][columnIndex] = 'B';
+} else {
+  playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
+}
+
 }
 
 const printBoard = board => {
@@ -50,3 +80,9 @@ let bombBoard = generatedBombBoard(3, 2, 4)
 
 console.log("Player board: " + printBoard(playerBoard));
 console.log("Bomb board: " + printBoard(bombBoard));
+
+flipTile(playerBoard, bombBoard, 0, 0);
+
+console.log("Updated Player Board");
+
+printBoard(playerBoard);
