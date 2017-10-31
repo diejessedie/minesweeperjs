@@ -78,8 +78,8 @@ const printBoard = board => {
 let playerBoard = generatedPlayerBoard(3, 4)
 let bombBoard = generatedBombBoard(3, 2, 4)
 
-console.log("Player board: " + printBoard(playerBoard));
-console.log("Bomb board: " + printBoard(bombBoard));
+console.log("Player board: "+ printBoard(playerBoard))
+console.log("Bomb board: "+ printBoard(bombBoard))
 
 flipTile(playerBoard, bombBoard, 0, 0);
 
